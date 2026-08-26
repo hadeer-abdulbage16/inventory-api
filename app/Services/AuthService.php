@@ -27,6 +27,30 @@ class AuthService
        ];
     }
 
+    public function login( array $credentials)
+    {
+        $user = User::where('email' , $credentials['email'])->first();
+
+        if ( ! $user || ! Hash::check($credentials['password'] , $user->password) ){
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials do not match our records.'],
+            ]);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return [
+            'user' => $user->load('roles'),
+            'token' => $token,
+        ];
+           
+    }
+
+    public function logout( User $user)
+    {
+        $user->currentAccessToken()->delete();
+    }
+
 
 }
 
