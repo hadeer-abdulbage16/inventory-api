@@ -14,11 +14,9 @@ return new class extends Migration
         Schema::create('stock_movements', function (Blueprint $table) {
              $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('store_id');
             $table->unsignedBigInteger('ref_id');
             $table->enum('movement', ['in', 'out']);
             $table->unsignedBigInteger('qty');
-            $table->unsignedBigInteger('qty_store_wise')->nullable();
             $table->string('ref_number')->nullable();
             $table->string('ref_type'); // purchase, sale, transfer, adjustment, return
             $table->decimal('before_qty', 15, 2)->default(0);
