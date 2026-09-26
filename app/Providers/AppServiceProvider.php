@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\Api\Transactions\PurchaseCompletedEvent;
+use App\Listeners\Api\Transactions\RecordPurchaseStockMovement;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,5 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Event::listen(PurchaseCompletedEvent::class , RecordPurchaseStockMovement::class);
+        
     }
 }

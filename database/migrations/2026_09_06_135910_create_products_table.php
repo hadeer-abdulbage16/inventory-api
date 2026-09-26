@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('barcode')->nullable()->unique();  
             $table->string('code')->unique();
             $table->string('name')->nullable();
-            $table->string('qty')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->text('description')->nullable();
             $table->string('expiry_date')->nullable();

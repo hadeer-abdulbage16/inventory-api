@@ -12,7 +12,7 @@ class ProductService{
     private string $cacheTag = 'products';
     public function list(  $show_all = false , int $page =1)
     {
-        $cacheKey = $show_all ? "product_all" : "product_page_{$page}";
+        $cacheKey = $show_all ? "product_all" : "product_page_{$page} ";
         return Cache::remember($cacheKey, 3600, function () use ($show_all) {
             $query = Product::with('category');
             return $show_all ? $query->get() : $query->paginate(10);

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Inventory\CategoryController;
 use App\Http\Controllers\Api\Inventory\ProductController;
 use App\Http\Controllers\Api\Inventory\ProductStockController;
+use App\Http\Controllers\Api\Inventory\StockMovementController;
 
 
 
@@ -26,7 +27,7 @@ Route::group(['prefix'=>'inventory' , 'middleware'=>'auth:sanctum'], function(){
         Route::post('/delete/{id}' , [ProductController::class , 'delete'])->name('delete');
         Route::get('search' , [ProductController::class , 'search'])->name('search');
     });
-//product end point 
+//product Stock end point 
     Route::group(['prefix'=>'product_stock' ], function(){
         Route::get('/list' , [ProductStockController::class , 'list'])->name('list');
         Route::post('/store' , [ProductStockController::class , 'store'])->name('store');
@@ -34,6 +35,11 @@ Route::group(['prefix'=>'inventory' , 'middleware'=>'auth:sanctum'], function(){
         Route::post('/delete/{id}' , [ProductStockController::class , 'delete'])->name('delete');
         Route::get('search' , [ProductStockController::class , 'search'])->name('search');
     });
+//Stock Movement  end point 
+    Route::group(['prefix'=>'stock_movement' ], function(){
+        Route::get('/list' , [StockMovementController::class , 'list'])->name('list');
+    });
+
 
 });
 

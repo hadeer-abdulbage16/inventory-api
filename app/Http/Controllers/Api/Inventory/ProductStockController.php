@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Inventory;
 
 use App\Http\Controllers\Controller;
 use App\Services\Inventory\ProductStockService;
+use App\Http\Resources\ProductStockResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\inventory\ProductStockRequest;
 
@@ -19,13 +20,13 @@ class ProductStockController extends Controller
 
     public function list(Request $request)
     {
-        $product = $this->productStock->list($request->boolean('show_all'));
+        $products = $this->productStock->list($request->boolean('show_all'));
 
          return response()->json([
             'success' => true,
             'message' => 'product retrieved successfly',
             'data' => [
-               'product' => $product,
+               'product' =>  ProductStockResource::collection($products)
                
             ] 
             
