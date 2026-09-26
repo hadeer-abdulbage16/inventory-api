@@ -14,6 +14,21 @@ class PurchaseController extends Controller
       $this->purchaseService = $purchaseService ;
     }
 
+    public function list(Request $request)
+    {
+        $purchase = $this->purchaseService->list($request->boolean('show_all'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'purchase retrieved successfly',
+            'data' => [
+               'purchase' => $purchase,
+               
+            ] 
+            
+        ],200);
+    }
+
     public function store(PurchaseRequest $request)
     {
         $createPurchase = $this->purchaseService->store($request->validated());
