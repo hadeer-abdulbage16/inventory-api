@@ -2,17 +2,17 @@
 
 namespace App\Listeners\Api\Transactions;
 
+use App\Events\Api\Transactions\SaleEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Events\Api\Transactions\PurchaseCompletedEvent;
 use App\Services\Inventory\StockMovementService;
 
-class RecordPurchaseStockMovement
+class RecordSaleStock
 {
     /**
      * Create the event listener.
      */
-    public function __construct(protected StockMovementService $stockMovementService)
+    public function __construct(StockMovementService $stockMovement)
     {
         //
     }
@@ -20,19 +20,19 @@ class RecordPurchaseStockMovement
     /**
      * Handle the event.
      */
-    public function handle(PurchaseCompletedEvent $event): void
+    public function handle(SaleEvent $event): void
     {
         //
-        $this->$stockMovementService->record([
+        $this->stockMovement->record([
             'product_id'  => $event->productId,
-            'ref_id'      => $event->purchaseId,
-            'movement'    => 'in',
+            'ref_id'      => $event->saleId,
+            'movement'    => 'out',
             'qty'         => $event->qty,
             'ref_number'  => $event->refNumber,
-            'ref_type'    => 'purchase',
+            'ref_type'    => 'sale',
             'cost_price'  => $event->costPrice,
             'notes'       => $event->notes,
-        ]);
 
+        ]);
     }
 }

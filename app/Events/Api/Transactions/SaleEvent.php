@@ -10,9 +10,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Inventory\StockMovement;
+use App\Models\Transactions\Sale;
 
 
-class PurchaseCompletedEvent
+class SaleEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,19 +21,18 @@ class PurchaseCompletedEvent
      * Create a new event instance.
      */
     public function __construct(
-        public StockMovement $stockMovement , 
-        public ?string $notifyEmail = null,
-        public int $productId,
-        public int $purchaseId,
+        public StockMovement $stockMonvement,
+        public int $productId ,
+        public int $saleId,
         public float $qty,
         public ?float $costPrice = null,
-        //public ?int $storeId = null,
         public ?string $refNumber = null,
-        public ?string $notes = null,
-        )
+        public string $notes,
+        public Sale $sale 
+    )
     {
         //
-         
+        
     }
 
     /**

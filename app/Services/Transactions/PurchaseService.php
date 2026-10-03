@@ -39,7 +39,7 @@ class PurchaseService{
            // create item 
             foreach($data['items'] as $items)
             {
-                $purchase->item()->create([
+                $purchase->items()->create([
                     'product_id' => $items['product_id'],
                     'product_code' => $items['product_code'],
                     'product_name' => $items['product_name'],
@@ -54,7 +54,7 @@ class PurchaseService{
             event(new PurchaseEvent($purchase));
 
             // listen at stock 
-            foreach ($data['item'] as $item)
+            foreach ($data['items'] as $item)
                 {
                     event(new PurchaseCompletedEvent(
                         productId: $item['product_id'],

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Transactions;
 use App\Http\Controllers\Controller;
 use App\Services\Transactions\PurchaseService;
 use App\Http\Requests\Api\Transactions\PurchaseRequest;
+use App\Http\Resources\Api\Transactions\PurchaseResource;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -22,7 +23,7 @@ class PurchaseController extends Controller
             'success' => true,
             'message' => 'purchase retrieved successfly',
             'data' => [
-               'purchase' => $purchase,
+               'purchase' => PurchaseResource::collection($purchase),
                
             ] 
             

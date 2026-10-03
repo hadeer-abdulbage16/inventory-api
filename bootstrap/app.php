@@ -10,6 +10,7 @@ return Application::configure(basePath: dirname(__DIR__))
         api:[
             __DIR__.'/../routes/api.php',
             __DIR__.'/../routes/inventory.php',
+            __DIR__.'/../routes/transaction.php',
         ],
         commands: __DIR__.'/../routes/console.php',
         health: '/up',

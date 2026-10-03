@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            
+            $table->string('invoice_number');
+            $table->date('invoice_date');
+            $table->tinyInteger('total_amount')->default(0);
+            $table->string('notes');
             $table->timestamps();
         });
     }

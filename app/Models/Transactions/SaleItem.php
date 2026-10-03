@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Models\Transactions;
+use App\Models\Inventory\ProductStock;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Inventory\ProductStock;
-use App\Models\Transactions\PurchaseInvoice;
 
-class PurchaseItem extends Model
+class SaleItem extends Model
 {
     //
     protected $guarded = [];
