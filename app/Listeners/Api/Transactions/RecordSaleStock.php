@@ -12,7 +12,7 @@ class RecordSaleStock
     /**
      * Create the event listener.
      */
-    public function __construct(StockMovementService $stockMovement)
+    public function __construct(protected StockMovementService $stockMovement)
     {
         //
     }

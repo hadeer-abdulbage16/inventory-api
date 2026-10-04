@@ -23,7 +23,7 @@ class RecordPurchaseStockMovement
     public function handle(PurchaseCompletedEvent $event): void
     {
         //
-        $this->$stockMovementService->record([
+        $this->stockMovementService->record([
             'product_id'  => $event->productId,
             'ref_id'      => $event->purchaseId,
             'movement'    => 'in',

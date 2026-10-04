@@ -19,14 +19,9 @@ class SaleListener
     /**
      * Handle the event.
      */
-    public function handle(SaleEvent $event): void
+    public function handle(): void
     {
         //
-        $sale = $event->sale;
-
-        foreach ($sale->items as $item)
-            {
-                $item->product->decrement ('quantity' , $item->qty);
-            }
+        
     }
 }

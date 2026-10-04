@@ -20,8 +20,8 @@ class PurchaseCompletedEvent
      * Create a new event instance.
      */
     public function __construct(
-        public StockMovement $stockMovement , 
-        public ?string $notifyEmail = null,
+      //  public StockMovement $stockMovement , 
+      //  public ?string $notifyEmail = null,
         public int $productId,
         public int $purchaseId,
         public float $qty,

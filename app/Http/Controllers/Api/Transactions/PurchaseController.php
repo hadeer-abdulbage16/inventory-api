@@ -32,7 +32,7 @@ class PurchaseController extends Controller
 
     public function store(PurchaseRequest $request)
     {
-        $createPurchase = $this->purchaseService->store($request->validated());
+        $purchase = $this->purchaseService->store($request->validated());
          return response()->json([
             'success' => true,
             'message' => 'purchase created successfly',

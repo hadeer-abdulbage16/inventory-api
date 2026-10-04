@@ -21,14 +21,13 @@ class SaleEvent
      * Create a new event instance.
      */
     public function __construct(
-        public StockMovement $stockMonvement,
         public int $productId ,
         public int $saleId,
         public float $qty,
         public ?float $costPrice = null,
         public ?string $refNumber = null,
         public string $notes,
-        public Sale $sale 
+        
     )
     {
         //

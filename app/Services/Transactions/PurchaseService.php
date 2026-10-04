@@ -6,7 +6,9 @@ namespace App\Services\Transactions;
 use App\Models\Transactions\Purchase;
 use App\Models\Transactions\PurchaseItem;
 use App\Events\Api\Transactions\PurchaseCompletedEvent;
-
+use App\Events\Api\Transactions\PurchaseEvent;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseService{
      public function list( $show_all = false , int $page =1)
@@ -24,9 +26,9 @@ class PurchaseService{
     public function store(array $data)
     {
       return DB::transaction(function () use ($data) {
-            $total = collect($data[$items]->sum(function ($data){
-                return $items['qty'] * $items['price'];
-            }));
+            $total = collect($data['items'])->sum(function ($item){
+                return $item['qty'] * $item['price'];
+            });
         
           // create purchase data 
             $purchase = Purchase::create([
@@ -40,6 +42,7 @@ class PurchaseService{
             foreach($data['items'] as $items)
             {
                 $purchase->items()->create([
+                    'purchase_id' => $purchase->id,
                     'product_id' => $items['product_id'],
                     'product_code' => $items['product_code'],
                     'product_name' => $items['product_name'],
@@ -47,11 +50,11 @@ class PurchaseService{
                     'qty' => $items['qty'],
                     'expiry_date' => $items['expiry_date'],
                     'price' => $items['price'],
-                    'purchase_id' => $purchase->id
+                    
                 ]);
 
             }
-            event(new PurchaseEvent($purchase));
+          //  event(new PurchaseEvent($purchase));
 
             // listen at stock 
             foreach ($data['items'] as $item)

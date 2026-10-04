@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Services\Transactions\SaleService;
 use App\Http\Requests\Api\Transactions\SaleRequest;
 use Illuminate\Http\Request;
+use App\Http\Resources\Api\Transactions\saleResource;
 
 class SaleController extends Controller
 {
     //
-    public function __construct(SaleService $saleService)
+    public function __construct(protected SaleService $saleService)
     {
-        $saleService = $this->saleService;
+         $this->saleService = $saleService ;
     }
 
     public function list(Request $request)
@@ -23,7 +24,7 @@ class SaleController extends Controller
             'success' => true,
             'message' => 'Sale retrieved successfly',
             'data' => [
-               'sale' => SaleResource::collection($sale),
+               'sale' => saleResource::collection($sale),
                
             ] 
             
@@ -32,13 +33,13 @@ class SaleController extends Controller
 
     public function store(SaleRequest $request)
     {
-        $sale = $this->saleService->store($request->validate());
+        $sale = $this->saleService->store($request->validated());
 
         return response()->json([
             'success' => true,
-            'message' => 'purchase created successfly',
+            'message' => 'sale created successfly',
             'data' => [
-               'purchase' => $purchase,
+               'sale' => $sale,
             ] 
             
         ],200);

@@ -27,7 +27,7 @@ class ProductRequest extends FormRequest
             'barcode' => 'required|string|max:255|unique:products,barcode',
             'code' => 'required|string|max:255|unique:products,code',
             'name' => 'nullable|string|max:255',
-            'qty' => 'required|numeric|max:60',
+            //'qty' => 'required|numeric|max:60',
             'category_id' => 'nullable|exists:categories,id',
             'description' => 'nullable|string',
             'expiry_date' => 'required|date',

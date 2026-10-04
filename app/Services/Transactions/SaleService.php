@@ -6,6 +6,8 @@ namespace App\Services\Transactions;
 use App\Models\Transactions\Sale;
 use App\Models\Transactions\SaleItem;
 use App\Events\Api\Transactions\SaleEvent;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 
 class SaleService {
@@ -14,7 +16,7 @@ class SaleService {
         $cacheKey = $show_all ? "sale_all" : "sale_page_{{$page}}";
 
         return Cache::remember( $cacheKey , 3600, function () use ($show_all) {
-            $query = Sale::with('item');
+            $query = Sale::with('items');
             return $show_all ? $query : $query->paginate(10);
             
         });
@@ -23,10 +25,10 @@ class SaleService {
 
     public function store(array $data)
     {
-        return DB::transaction(function () {
-            $total = collect($data[$items]->sum(function ($data){
-                return $items['qty'] * $items['price'];
-            }));
+        return DB::transaction(function () use ($data) {
+            $total = collect($data['items'])->sum(function ($item){
+                return $item['qty'] * $item['price'];
+            });
 
              // create sale data 
             $sale = Sale::create([
@@ -39,7 +41,7 @@ class SaleService {
          // create item 
            foreach($data['items'] as $items)
             {
-                $sale->item()->create([
+                $sale->items()->create([
                     'product_id' => $items['product_id'],
                     'product_code' => $items['product_code'],
                     'product_name' => $items['product_name'],
@@ -54,7 +56,7 @@ class SaleService {
 
             foreach ($data['items'] as $items)
                 {
-                    event (new SaleEvent( $sale ,
+                    event (new SaleEvent( 
                         productId: $items['product_id'],
                         saleId: $sale->id,
                         qty: $items['qty'],
@@ -64,7 +66,7 @@ class SaleService {
                        
                     ));
                 }
-            return $sale->load('item.product');   
+            return $sale->load('items.product');   
         });
 
 
